@@ -5,6 +5,7 @@ import { VerifiedBadge } from "@/components/VerifiedBadge";
 import type { FullUserProfile, ProfileDetailResponse } from "@/types";
 import { formatEngagementRate } from "@/utils/formatters";
 import { loadProfileByUsername } from "@/utils/profileLoader";
+import { useSavedList } from "@/context/SavedListContext";
 
 function formatFollowersDetail(count: number) {
   if (count >= 1000000) return (count / 1000000).toFixed(2) + "M";
@@ -15,7 +16,7 @@ function formatFollowersDetail(count: number) {
 export function ProfileDetailPage() {
   const { username } = useParams<{ username: string }>();
   const [searchParams] = useSearchParams();
-  const platform = searchParams.get("platform") || "unknown";
+  const platform = searchParams.get("platform") || "instagram";
   const [profileData, setProfileData] = useState<ProfileDetailResponse | null>(
     null
   );
@@ -53,7 +54,7 @@ export function ProfileDetailPage() {
         <p className="text-red-600 mb-4">
           Could not load profile details for {username}
         </p>
-        <Link to="/" className="text-blue-600 underline">
+        <Link to={`/?platform=${platform}`} className="text-blue-600 underline">
           Back to search
         </Link>
       </Layout>
@@ -61,10 +62,20 @@ export function ProfileDetailPage() {
   }
 
   const user: FullUserProfile = profileData.data.user_profile;
+  const { addProfile, removeProfile, isProfileSaved } = useSavedList();
+  const isSaved = isProfileSaved(user.user_id);
+
+  const handleListClick = () => {
+    if (isSaved) {
+      removeProfile(user.user_id);
+    } else {
+      addProfile(user);
+    }
+  };
 
   return (
     <Layout title={user.fullname}>
-      <Link to="/" className="text-sm text-blue-600 mb-4 inline-block">
+      <Link to={`/?platform=${platform}`} className="text-sm text-blue-600 mb-4 inline-block">
         ← Back to search
       </Link>
 
@@ -148,13 +159,15 @@ export function ProfileDetailPage() {
             </a>
           )}
 
-          {/* TODO: candidates must implement Add to List feature */}
-          {/* TODO: candidates must implement Add to List feature */}
           <button
-            disabled
-            className="block mt-4 px-4 py-2 bg-gray-300 text-gray-500 rounded cursor-not-allowed"
+            className={`block mt-4 px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 cursor-pointer ${
+              isSaved
+                ? "bg-purple-600 hover:bg-purple-700 text-white dark:bg-purple-500 dark:hover:bg-purple-600 shadow-sm"
+                : "border border-purple-600 text-purple-600 hover:bg-purple-50 dark:border-purple-400 dark:text-purple-400 dark:hover:bg-purple-950/30"
+            }`}
+            onClick={handleListClick}
           >
-            Add to List
+            {isSaved ? "Added ✓" : "Add to List"}
           </button>
         </div>
       </div>

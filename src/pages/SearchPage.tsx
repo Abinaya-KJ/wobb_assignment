@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import type { Platform } from "@/types";
 import { Layout } from "@/components/Layout";
 import { PlatformFilter } from "@/components/PlatformFilter";
@@ -6,7 +7,13 @@ import { ProfileList } from "@/components/ProfileList";
 import { extractProfiles, filterProfiles } from "@/utils/dataHelpers";
 
 export function SearchPage() {
-  const [platform, setPlatform] = useState<Platform>("instagram");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const platformParam = searchParams.get("platform") as Platform | null;
+  const initialPlatform: Platform = (platformParam && ["instagram", "youtube", "tiktok"].includes(platformParam))
+    ? platformParam
+    : "instagram";
+
+  const [platform, setPlatform] = useState<Platform>(initialPlatform);
   const [searchQuery, setSearchQuery] = useState("");
   const [clickCount, setClickCount] = useState(0);
 
@@ -29,6 +36,7 @@ export function SearchPage() {
         onChange={(p) => {
           setPlatform(p);
           setSearchQuery("");
+          setSearchParams({ platform: p });
         }}
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
