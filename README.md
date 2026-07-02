@@ -56,7 +56,13 @@
 - **Static mock data instead of real APIs** — avoids the complexity of API keys and rate limits but means the data never updates automatically
 - **Letter avatar fallback instead of fixing each URL** — more maintainable since broken URLs can't always be predicted, but the fallback looks less polished than a real profile photo
 - **Pure Tailwind CSS animations instead of Framer Motion** — keeps the bundle size smaller and avoids an extra dependency, but animations are less flexible and smooth compared to a dedicated animation library
-- **No Zustand yet** — React Context was kept as-is due to time constraints; Zustand would make state management cleaner especially as the app grows
+- **Zustand not implemented** — I was unable to replace React 
+  Context with Zustand due to a power outage during development 
+  and limited time remaining before the deadline. I understand 
+  the concept of Zustand and how it simplifies state management 
+  compared to React Context, but I did not want to rush the 
+  implementation and risk breaking the existing working features. 
+  This remains as a planned improvement for future iterations.
 
 ---
 
