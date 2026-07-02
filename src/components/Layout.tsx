@@ -30,7 +30,7 @@ const LEFT_DECORATIONS: DecorationItem[] = [
     rotation: "-15deg",
     animation: "floatY 6s ease-in-out infinite",
     glow: "drop-shadow(0 15px 30px rgba(0,0,0,0.55))",
-    width: "120px",
+    width: "144px", // w-36
   },
   {
     src: "/src/assets/images/decorations/ring-light.png?v=2",
@@ -40,7 +40,7 @@ const LEFT_DECORATIONS: DecorationItem[] = [
     rotation: "12deg",
     animation: "floatY2 5s ease-in-out infinite",
     glow: "drop-shadow(0 0 25px rgba(255,255,255,0.45)) drop-shadow(0 10px 20px rgba(0,0,0,0.3))",
-    width: "90px",
+    width: "144px", // w-36
   },
   {
     src: "/src/assets/images/decorations/headphones.png?v=2",
@@ -50,7 +50,7 @@ const LEFT_DECORATIONS: DecorationItem[] = [
     rotation: "-10deg",
     animation: "floatY3 7s ease-in-out infinite",
     glow: "drop-shadow(0 20px 40px rgba(0,0,0,0.6))",
-    width: "105px",
+    width: "128px", // w-32
   },
   {
     src: "/src/assets/images/decorations/tiktok-logo.png?v=2",
@@ -60,7 +60,7 @@ const LEFT_DECORATIONS: DecorationItem[] = [
     rotation: "18deg",
     animation: "floatY 5.5s ease-in-out infinite",
     glow: "drop-shadow(0 0 20px rgba(0,242,234,0.45))",
-    width: "65px",
+    width: "112px", // w-28
   },
   {
     src: "/src/assets/images/decorations/microphone.png?v=2",
@@ -70,7 +70,7 @@ const LEFT_DECORATIONS: DecorationItem[] = [
     rotation: "15deg",
     animation: "floatY2 6.5s ease-in-out infinite",
     glow: "drop-shadow(0 15px 35px rgba(0,0,0,0.5))",
-    width: "75px",
+    width: "96px", // w-24
   },
 ];
 
@@ -83,7 +83,7 @@ const RIGHT_DECORATIONS: DecorationItem[] = [
     rotation: "-22deg",
     animation: "floatY3 6.2s ease-in-out infinite",
     glow: "drop-shadow(0 0 25px rgba(139,92,246,0.45))",
-    width: "80px",
+    width: "112px", // w-28
   },
   {
     src: "/src/assets/images/decorations/gimbal.png?v=2",
@@ -93,7 +93,7 @@ const RIGHT_DECORATIONS: DecorationItem[] = [
     rotation: "15deg",
     animation: "floatY 5.8s ease-in-out infinite",
     glow: "drop-shadow(0 15px 35px rgba(0,0,0,0.55))",
-    width: "105px",
+    width: "128px", // w-32
   },
   {
     src: "/src/assets/images/decorations/youtube-play.png?v=2",
@@ -103,7 +103,7 @@ const RIGHT_DECORATIONS: DecorationItem[] = [
     rotation: "-12deg",
     animation: "floatY2 6.8s ease-in-out infinite",
     glow: "drop-shadow(0 0 20px rgba(255,0,0,0.45))",
-    width: "80px",
+    width: "144px", // w-36
   },
   {
     src: "/src/assets/images/decorations/drone.png?v=2",
@@ -113,7 +113,7 @@ const RIGHT_DECORATIONS: DecorationItem[] = [
     rotation: "10deg",
     animation: "floatY3 7.5s ease-in-out infinite",
     glow: "drop-shadow(0 20px 40px rgba(0,0,0,0.55))",
-    width: "115px",
+    width: "128px", // w-32
   },
 ];
 
@@ -157,7 +157,7 @@ export function Layout({ children, title, showDecorations = true }: LayoutProps)
       {showDecorations && (
         <>
           {/* Left Panel */}
-          <div className="hidden md:block fixed left-0 top-[140px] bottom-10 w-[180px] pointer-events-none z-0">
+          <div className="hidden md:block fixed left-2 lg:left-4 xl:left-[calc(50vw-580px)] top-[140px] bottom-10 w-[220px] pointer-events-none z-0">
             {LEFT_DECORATIONS.map((item, idx) => (
               <div
                 key={idx}
@@ -184,7 +184,7 @@ export function Layout({ children, title, showDecorations = true }: LayoutProps)
           </div>
 
           {/* Right Panel */}
-          <div className="hidden md:block fixed right-0 top-[140px] bottom-10 w-[180px] pointer-events-none z-0">
+          <div className="hidden md:block fixed right-2 lg:right-4 xl:right-[calc(50vw-580px)] top-[140px] bottom-10 w-[220px] pointer-events-none z-0">
             {RIGHT_DECORATIONS.map((item, idx) => (
               <div
                 key={idx}
