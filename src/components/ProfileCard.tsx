@@ -103,6 +103,10 @@ export function ProfileCard({
               src={profile.picture}
               className="w-full h-full rounded-full object-cover"
               style={{ border: "2px solid #0F172A" }}
+              onError={(e) => {
+                e.currentTarget.onerror = null;
+                e.currentTarget.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(profile.username)}&background=random&color=fff&size=128&bold=true`;
+              }}
             />
           </div>
         </div>

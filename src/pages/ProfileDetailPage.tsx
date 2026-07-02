@@ -212,6 +212,10 @@ export function ProfileDetailPage() {
                 src={user.picture}
                 className="w-24 h-24 rounded-full object-cover"
                 style={{ border: "3px solid #0F172A" }}
+                onError={(e) => {
+                  e.currentTarget.onerror = null;
+                  e.currentTarget.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(user.username)}&background=random&color=fff&size=128&bold=true`;
+                }}
               />
             </div>
 

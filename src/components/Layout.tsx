@@ -172,6 +172,10 @@ export function Layout({ children, title }: LayoutProps) {
                         src={p.picture}
                         className="w-10 h-10 rounded-full object-cover"
                         style={{ border: "2px solid rgba(99,102,241,0.4)" }}
+                        onError={(e) => {
+                          e.currentTarget.onerror = null;
+                          e.currentTarget.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(p.username)}&background=random&color=fff&size=128&bold=true`;
+                        }}
                       />
                       <div className="flex-1 text-left min-w-0">
                         <div className="font-bold text-sm text-white truncate">
