@@ -61,9 +61,6 @@
 ---
 
 ## How to Run
-
-```bash
+command prompt 
 npm install
-npm run dev      # Start dev server
-npm run build    # Production build
-```
+npm run dev
