@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { useSavedList } from "@/context/SavedListContext";
@@ -6,9 +6,118 @@ import { useSavedList } from "@/context/SavedListContext";
 interface LayoutProps {
   children: ReactNode;
   title?: string;
+  showDecorations?: boolean;
 }
 
-export function Layout({ children, title }: LayoutProps) {
+interface DecorationItem {
+  src: string;
+  alt: string;
+  top: string;
+  left?: string;
+  right?: string;
+  rotation: string;
+  animation: string;
+  glow: string;
+  width: string;
+}
+
+const LEFT_DECORATIONS: DecorationItem[] = [
+  {
+    src: "/src/assets/images/decorations/camera.png?v=2",
+    alt: "3D Professional Camera",
+    top: "0%",
+    left: "-15px",
+    rotation: "-15deg",
+    animation: "floatY 6s ease-in-out infinite",
+    glow: "drop-shadow(0 15px 30px rgba(0,0,0,0.55))",
+    width: "120px",
+  },
+  {
+    src: "/src/assets/images/decorations/ring-light.png?v=2",
+    alt: "3D Ring Light",
+    top: "14%",
+    left: "40px",
+    rotation: "12deg",
+    animation: "floatY2 5s ease-in-out infinite",
+    glow: "drop-shadow(0 0 25px rgba(255,255,255,0.45)) drop-shadow(0 10px 20px rgba(0,0,0,0.3))",
+    width: "90px",
+  },
+  {
+    src: "/src/assets/images/decorations/headphones.png?v=2",
+    alt: "3D Headphones",
+    top: "38%",
+    left: "-10px",
+    rotation: "-10deg",
+    animation: "floatY3 7s ease-in-out infinite",
+    glow: "drop-shadow(0 20px 40px rgba(0,0,0,0.6))",
+    width: "105px",
+  },
+  {
+    src: "/src/assets/images/decorations/tiktok-logo.png?v=2",
+    alt: "TikTok Logo",
+    top: "56%",
+    left: "50px",
+    rotation: "18deg",
+    animation: "floatY 5.5s ease-in-out infinite",
+    glow: "drop-shadow(0 0 20px rgba(0,242,234,0.45))",
+    width: "65px",
+  },
+  {
+    src: "/src/assets/images/decorations/microphone.png?v=2",
+    alt: "3D Microphone",
+    top: "74%",
+    left: "5px",
+    rotation: "15deg",
+    animation: "floatY2 6.5s ease-in-out infinite",
+    glow: "drop-shadow(0 15px 35px rgba(0,0,0,0.5))",
+    width: "75px",
+  },
+];
+
+const RIGHT_DECORATIONS: DecorationItem[] = [
+  {
+    src: "/src/assets/images/decorations/led-light.png?v=2",
+    alt: "3D LED Light Wand",
+    top: "0%",
+    right: "20px",
+    rotation: "-22deg",
+    animation: "floatY3 6.2s ease-in-out infinite",
+    glow: "drop-shadow(0 0 25px rgba(139,92,246,0.45))",
+    width: "80px",
+  },
+  {
+    src: "/src/assets/images/decorations/gimbal.png?v=2",
+    alt: "3D Gimbal Stabilizer",
+    top: "24%",
+    right: "-10px",
+    rotation: "15deg",
+    animation: "floatY 5.8s ease-in-out infinite",
+    glow: "drop-shadow(0 15px 35px rgba(0,0,0,0.55))",
+    width: "105px",
+  },
+  {
+    src: "/src/assets/images/decorations/youtube-play.png?v=2",
+    alt: "YouTube Neon Play Button",
+    top: "50%",
+    right: "40px",
+    rotation: "-12deg",
+    animation: "floatY2 6.8s ease-in-out infinite",
+    glow: "drop-shadow(0 0 20px rgba(255,0,0,0.45))",
+    width: "80px",
+  },
+  {
+    src: "/src/assets/images/decorations/drone.png?v=2",
+    alt: "3D Quadcopter Drone",
+    top: "70%",
+    right: "-10px",
+    rotation: "10deg",
+    animation: "floatY3 7.5s ease-in-out infinite",
+    glow: "drop-shadow(0 20px 40px rgba(0,0,0,0.55))",
+    width: "115px",
+  },
+];
+
+export function Layout({ children, title, showDecorations = true }: LayoutProps) {
   const { savedProfiles, removeProfile } = useSavedList();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [badgeBounce, setBadgeBounce] = useState(false);
@@ -23,7 +132,86 @@ export function Layout({ children, title }: LayoutProps) {
   }, [savedProfiles.length]);
 
   return (
-    <div className="min-h-screen relative" style={{ background: "#0F172A" }}>
+    <div className="min-h-screen relative overflow-x-hidden" style={{ background: "#0B0F19" }}>
+      {/* Star Field Background */}
+      <div className="star-field pointer-events-none" />
+
+      {/* Central spotlight radial glow behind header/content */}
+      <div
+        style={{
+          position: "fixed",
+          top: "10%",
+          left: "50%",
+          transform: "translateX(-50%)",
+          width: "900px",
+          height: "900px",
+          borderRadius: "50%",
+          background: "radial-gradient(circle, rgba(99,102,241,0.07) 0%, rgba(139,92,246,0.03) 50%, transparent 70%)",
+          pointerEvents: "none",
+          zIndex: 0,
+          filter: "blur(60px)",
+        }}
+      />
+
+      {/* Floating 3D Side Decorations */}
+      {showDecorations && (
+        <>
+          {/* Left Panel */}
+          <div className="hidden md:block fixed left-0 top-[140px] bottom-10 w-[180px] pointer-events-none z-0">
+            {LEFT_DECORATIONS.map((item, idx) => (
+              <div
+                key={idx}
+                className="absolute"
+                style={{
+                  top: item.top,
+                  left: item.left,
+                  animation: item.animation,
+                  animationDelay: `${idx * 0.4}s`,
+                  '--rot': item.rotation,
+                } as React.CSSProperties}
+              >
+                <img
+                  src={item.src}
+                  alt={item.alt}
+                  className="h-auto object-contain"
+                  style={{
+                    width: item.width,
+                    filter: item.glow,
+                  }}
+                />
+              </div>
+            ))}
+          </div>
+
+          {/* Right Panel */}
+          <div className="hidden md:block fixed right-0 top-[140px] bottom-10 w-[180px] pointer-events-none z-0">
+            {RIGHT_DECORATIONS.map((item, idx) => (
+              <div
+                key={idx}
+                className="absolute"
+                style={{
+                  top: item.top,
+                  right: item.right,
+                  animation: item.animation,
+                  animationDelay: `${idx * 0.4}s`,
+                  '--rot': item.rotation,
+                } as React.CSSProperties}
+              >
+                <img
+                  src={item.src}
+                  alt={item.alt}
+                  className="h-auto object-contain"
+                  style={{
+                    width: item.width,
+                    filter: item.glow,
+                  }}
+                />
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+
       {/* Ambient background orbs */}
       <div
         style={{
@@ -33,7 +221,7 @@ export function Layout({ children, title }: LayoutProps) {
           width: "500px",
           height: "500px",
           borderRadius: "50%",
-          background: "radial-gradient(circle, rgba(99,102,241,0.15) 0%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(99,102,241,0.1) 0%, transparent 70%)",
           pointerEvents: "none",
           zIndex: 0,
           animation: "floatOrb 12s ease-in-out infinite",
@@ -42,12 +230,12 @@ export function Layout({ children, title }: LayoutProps) {
       <div
         style={{
           position: "fixed",
-          bottom: "-150px",
+          top: "40%",
           left: "-100px",
           width: "600px",
           height: "600px",
           borderRadius: "50%",
-          background: "radial-gradient(circle, rgba(139,92,246,0.1) 0%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(139,92,246,0.06) 0%, transparent 70%)",
           pointerEvents: "none",
           zIndex: 0,
           animation: "floatOrb 16s ease-in-out infinite reverse",

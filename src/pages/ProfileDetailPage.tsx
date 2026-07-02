@@ -47,7 +47,7 @@ interface StatCardProps {
   platformColor: string;
 }
 
-function StatCard({ label, value, gradientIndex = 0, platformColor }: StatCardProps) {
+function StatCard({ label, value, gradientIndex = 0 }: StatCardProps) {
   return (
     <div
       className="rounded-xl p-4 text-left"

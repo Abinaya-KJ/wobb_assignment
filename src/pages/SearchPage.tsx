@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
 import type { Platform } from "@/types";
 import { Layout } from "@/components/Layout";

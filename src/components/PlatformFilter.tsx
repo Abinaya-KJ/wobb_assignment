@@ -1,3 +1,4 @@
+import React from "react";
 import type { Platform } from "@/types";
 import { PLATFORMS, getPlatformLabel } from "@/utils/dataHelpers";
 
@@ -47,7 +48,7 @@ function TikTokIcon() {
   );
 }
 
-const PLATFORM_ICONS: Record<Platform, JSX.Element> = {
+const PLATFORM_ICONS: Record<Platform, React.ReactNode> = {
   instagram: <InstagramIcon />,
   youtube: <YouTubeIcon />,
   tiktok: <TikTokIcon />,
